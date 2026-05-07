@@ -32,7 +32,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.2.2";
+const APP_VERSION = "1.2.3";
 
 export default function App() {
   // --- STATE ---
@@ -682,7 +682,7 @@ export default function App() {
                             type="file" 
                             ref={fileInputRef} 
                             onChange={handleImportCSV} 
-                            accept=".csv" 
+                            accept=".csv, text/csv, application/vnd.ms-excel" 
                             className="hidden" 
                           />
                         </div>
