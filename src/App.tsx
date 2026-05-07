@@ -32,6 +32,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
+const APP_VERSION = "1.2.1";
 
 export default function App() {
   // --- STATE ---
@@ -258,7 +259,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-school-bg font-sans text-slate-800 flex flex-col">
       {/* Header */}
-      <header className="bg-school-blue text-white px-6 md:px-10 py-5 flex flex-col md:flex-row justify-between items-center border-b-6 border-school-yellow z-20">
+      <header className="bg-school-blue text-white px-6 md:px-10 py-5 flex flex-col md:flex-row justify-between items-center border-b-6 border-school-yellow z-20 relative">
+        <div className="absolute top-2 left-4 text-[9px] font-bold opacity-30 tracking-tighter uppercase pointer-events-none">
+          Build {APP_VERSION}
+        </div>
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wider">Sorteo Escolar 2024</h1>
           <p className="text-sm opacity-90 mt-1">Recaudación para el Viaje de Fin de Curso</p>
@@ -774,3 +778,13 @@ export default function App() {
     </div>
   );
 }
+
+/**
+ * INSTRUCCIONES PARA PUBLICAR EN GITHUB PAGES:
+ * 1. Crea un repositorio público en github.com (ej: "sorteo-escolar")
+ * 2. Sube todos los archivos (incluyendo la carpeta .github) a la rama main
+ * 3. Ve a Settings > Pages en tu repositorio
+ * 4. En "Build and deployment" > "Source", selecciona "GitHub Actions"
+ * 5. Automáticamente se ejecutará el proceso y en 1-2 minutos estará disponible en: 
+ *    https://TU_USUARIO.github.io/sorteo-escolar/
+ */
