@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-school-blue: #1e40af;
+  --color-school-yellow: #facc15;
+  --color-school-orange: #fb923c;
+  --color-school-bg: #f8fafc;
+  --color-reserved-bg: #e2e8f0;
+  --color-reserved-text: #64748b;
+  --color-available-bg: #ffffff;
+  
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
