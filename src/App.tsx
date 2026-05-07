@@ -32,7 +32,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.3.2";
+const APP_VERSION = "1.4.0";
 
 export default function App() {
   // --- STATE ---
@@ -55,6 +55,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [editingReservation, setEditingReservation] = useState<Reservation | null>(null);
   const [editedName, setEditedName] = useState("");
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [confirmModal, setConfirmModal] = useState<{
@@ -265,7 +266,7 @@ export default function App() {
         </div>
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wider">SORTEO ESCOLAR 2026</h1>
-          <p className="text-sm opacity-90 mt-1">Viaje de Fin de Curso</p>
+          <p className="text-sm opacity-90 mt-1">Sorteo cheque material escolar 50€</p>
         </div>
         
         <div className="flex gap-6 md:gap-10">
@@ -290,6 +291,14 @@ export default function App() {
           <div className="bg-school-orange text-white py-3 px-4 rounded-lg text-center font-bold text-lg shadow-sm">
             {PRICE_PER_NUMBER}€ POR NÚMERO
           </div>
+
+          <button 
+            onClick={() => setShowInfoModal(true)}
+            className="w-full bg-school-yellow text-school-blue py-3 px-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-md hover:bg-white transition-all flex items-center justify-center gap-2"
+          >
+            <Trophy className="w-4 h-4" />
+            Sobre el sorteo...
+          </button>
 
           <div className="bg-linear-to-br from-[#00ced1] to-[#008b8b] text-white p-6 rounded-2xl shadow-lg">
             <div className="text-[10px] uppercase font-bold mb-2 opacity-90 tracking-wider">Pago por Bizum</div>
@@ -573,6 +582,130 @@ export default function App() {
                   >
                     Guardar Cambios
                   </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* INFO MODAL */}
+      <AnimatePresence>
+        {showInfoModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowInfoModal(false)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white w-full max-w-2xl rounded-[32px] shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh]"
+            >
+              <div className="p-1 bg-school-yellow"></div>
+              <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
+                <button 
+                  onClick={() => setShowInfoModal(false)}
+                  className="absolute top-6 right-6 text-slate-300 hover:text-school-blue p-2 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                <div className="text-center mb-8">
+                  <div className="inline-block bg-school-blue/5 p-4 rounded-3xl mb-4">
+                    <Trophy className="w-12 h-12 text-school-blue" />
+                  </div>
+                  <h2 className="text-3xl font-black text-school-blue leading-tight uppercase tracking-tight">
+                    SORTEO CHEQUE 50€<br />
+                    <span className="text-school-yellow bg-school-blue px-2 py-0.5 rounded-lg inline-block mt-2">MATERIAL ESCOLAR</span>
+                  </h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-6">
+                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                      <h3 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-school-blue rounded-full"></div>
+                        El Premio
+                      </h3>
+                      <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                        Sorteamos un cheque por valor de <span className="font-bold text-school-blue text-lg">50€</span> en cada clase.
+                      </p>
+                    </div>
+
+                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                      <h3 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-school-blue rounded-full"></div>
+                        ¿Cómo se gana?
+                      </h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Resultará ganadora la persona que compre la terminación que coincida con los <span className="font-bold text-slate-800">2 últimos números</span> del Sorteo de la ONCE del <span className="font-bold text-school-orange">18 de Junio</span>.
+                      </p>
+                    </div>
+
+                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                      <h3 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-school-blue rounded-full"></div>
+                        Aportación
+                      </h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        Cada terminación supone una aportación de <span className="font-bold text-school-blue">2€</span>.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="bg-school-blue text-white p-6 rounded-3xl shadow-xl">
+                      <h3 className="font-black text-white/60 text-[10px] uppercase tracking-widest mb-3">Destino de los fondos</h3>
+                      <p className="text-sm leading-relaxed font-bold">
+                        Los beneficios de este sorteo se destinarán a la cubierta de la entrada por la puerta de la cancela.
+                      </p>
+                    </div>
+
+                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                      <h3 className="font-black text-slate-800 text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-school-blue rounded-full"></div>
+                        Canjeable en:
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 bg-white p-3 rounded-2xl border border-slate-50 shadow-sm">
+                          <div className="w-8 h-8 md:w-10 md:h-10 text-school-blue flex-shrink-0">
+                            <Plus className="w-full h-full rotate-45" />
+                          </div>
+                          <div>
+                            <p className="font-bold text-xs text-slate-800 leading-tight">InGenio</p>
+                            <p className="text-[10px] text-slate-400 font-medium italic">No sólo papelería</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 bg-white p-3 rounded-2xl border border-slate-50 shadow-sm">
+                          <div className="w-8 h-8 md:w-10 md:h-10 text-rose-400 flex-shrink-0">
+                            <Plus className="w-full h-full rotate-45" />
+                          </div>
+                          <div>
+                            <p className="font-bold text-xs text-slate-800 leading-tight">Arte y Papel</p>
+                            <p className="text-[10px] text-slate-400 font-medium italic">Aquí se dan besos</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 p-6 bg-rose-50 rounded-3xl border border-rose-100 italic">
+                  <p className="text-xs text-rose-500 leading-relaxed font-bold">
+                    IMPORTANTE!! SI LA TERMINACIÓN GANADORA NO HA SIDO ADQUIRIDA POR NINGUNA FAMILIA, EL PREMIO QUEDARÁ DESIERTO EN ESA CLASE.
+                  </p>
+                </div>
+
+                <div className="mt-10 flex flex-col items-center">
+                  <p className="text-[10px] font-black uppercase text-slate-300 tracking-[0.2em] mb-4">Organiza:</p>
+                  <div className="bg-school-blue text-white px-6 py-3 rounded-full font-black italic tracking-tighter text-sm flex items-center gap-2 shadow-lg scale-110">
+                    AMPA CANVIA
+                  </div>
                 </div>
               </div>
             </motion.div>
