@@ -32,7 +32,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.2.3";
+const APP_VERSION = "1.3.0";
 
 export default function App() {
   // --- STATE ---
