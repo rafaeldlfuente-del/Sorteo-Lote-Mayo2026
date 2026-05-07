@@ -32,7 +32,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.3.1";
+const APP_VERSION = "1.3.2";
 
 export default function App() {
   // --- STATE ---
@@ -264,8 +264,8 @@ export default function App() {
           Build {APP_VERSION}
         </div>
         <div className="text-center md:text-left mb-4 md:mb-0">
-          <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wider">Sorteo Escolar 2024</h1>
-          <p className="text-sm opacity-90 mt-1">Recaudación para el Viaje de Fin de Curso</p>
+          <h1 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wider">SORTEO ESCOLAR 2026</h1>
+          <p className="text-sm opacity-90 mt-1">Viaje de Fin de Curso</p>
         </div>
         
         <div className="flex gap-6 md:gap-10">
