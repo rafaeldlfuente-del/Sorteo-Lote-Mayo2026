@@ -17,7 +17,8 @@ import {
   BarChartIcon,
   Smartphone,
   Pencil,
-  Upload
+  Upload,
+  Copy
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -32,7 +33,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.4.1";
 
 export default function App() {
   // --- STATE ---
@@ -56,6 +57,7 @@ export default function App() {
   const [editingReservation, setEditingReservation] = useState<Reservation | null>(null);
   const [editedName, setEditedName] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [confirmModal, setConfirmModal] = useState<{
@@ -137,6 +139,22 @@ export default function App() {
     setIsAdminAuthenticated(false);
     setShowAdmin(false);
     setConfirmModal(null);
+  };
+  
+  const copyAvailableNumbers = () => {
+    const available = [];
+    for (let i = 0; i < 100; i++) {
+      const numStr = i.toString().padStart(2, '0');
+      if (!reservations[numStr]) {
+        available.push(numStr);
+      }
+    }
+    
+    const textToCopy = available.join(", ");
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setCopyFeedback(true);
+      setTimeout(() => setCopyFeedback(false), 2000);
+    });
   };
 
   const handleAdminAuth = () => {
@@ -298,6 +316,27 @@ export default function App() {
           >
             <Trophy className="w-4 h-4" />
             Sobre el sorteo...
+          </button>
+
+          <button 
+            onClick={copyAvailableNumbers}
+            className={`w-full py-3 px-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-md transition-all flex items-center justify-center gap-2 border-2 ${
+              copyFeedback 
+                ? 'bg-emerald-500 border-emerald-500 text-white' 
+                : 'bg-white border-slate-100 text-slate-400 hover:border-school-blue hover:text-school-blue'
+            }`}
+          >
+            {copyFeedback ? (
+              <>
+                <CheckCircle className="w-4 h-4" />
+                ¡Copiado!
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4" />
+                Copiar Libres
+              </>
+            )}
           </button>
 
           <div className="bg-linear-to-br from-[#00ced1] to-[#008b8b] text-white p-6 rounded-2xl shadow-lg">
@@ -810,6 +849,17 @@ export default function App() {
                           >
                             <Upload className="w-4 h-4" />
                             Importar
+                          </button>
+                          <button 
+                            onClick={copyAvailableNumbers}
+                            className={`col-span-2 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all shadow-lg text-[10px] uppercase tracking-widest border-2 ${
+                              copyFeedback 
+                                ? 'bg-emerald-500 border-emerald-500 text-white' 
+                                : 'bg-white border-slate-100 text-slate-400 hover:border-school-blue hover:text-school-blue shadow-none'
+                            }`}
+                          >
+                            <Copy className="w-4 h-4" />
+                            {copyFeedback ? '¡Copiado al portapapeles!' : 'Copiar listado de disponibles'}
                           </button>
                           <input 
                             type="file" 
