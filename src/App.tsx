@@ -33,7 +33,7 @@ interface Reservation {
 const PRICE_PER_NUMBER = 2;
 const BIZUM_NUMBER = "XXXXXXXXXX"; // Placeholder - can be edited by admin
 const ADMIN_PIN = "191104";
-const APP_VERSION = "1.4.1";
+const APP_VERSION = "1.4.2";
 
 export default function App() {
   // --- STATE ---
@@ -150,7 +150,17 @@ export default function App() {
       }
     }
     
-    const textToCopy = available.join(", ");
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    const dateStr = `${day}/${month}/${year}, ${hours}:${minutes}`;
+    const header = `Los números disponibles a día ${dateStr} son: `;
+    const textToCopy = header + available.join(", ");
+    
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopyFeedback(true);
       setTimeout(() => setCopyFeedback(false), 2000);
